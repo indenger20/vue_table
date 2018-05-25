@@ -3,7 +3,7 @@
     <b-table hover :items="records" :fields="fields">
       <template slot="actions" slot-scope="row">
         <b-dropdown text="Dropdown Button" size="sm">
-          <b-dropdown-item @click="() => editRow(row.item, 'edition-modal')">Edit</b-dropdown-item>
+          <b-dropdown-item @click="() => editRow(row.item, 'edit')">Edit</b-dropdown-item>
           <b-dropdown-item @click="() => removeRow(row.item)">Remove</b-dropdown-item>
         </b-dropdown>
       </template>
@@ -14,6 +14,7 @@
       :record="record"
       :modalType="modalType"
     ></modal>
+    <b-button variant="primary" @click="addRow">Add Row</b-button>
   </div>
 </template>
 

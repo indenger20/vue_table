@@ -12,6 +12,9 @@ export default {
   name: 'home',
   components: {
     Table
-  }
+  },
+  created() {
+    this.$store.dispatch('getAllRecords');
+  },
 }
 </script>

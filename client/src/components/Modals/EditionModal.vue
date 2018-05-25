@@ -33,23 +33,36 @@ export default {
   props: {
     record: Object,
     closeModal: Function,
+    localModalType: String
   },
   data() {
     return {
       first_name: "",
-      last_name: "",
+      last_name: ""
     };
   },
   methods: {
-    save(e) {
-      e.preventDefault();
-      const data = {
+    getData() {
+      return {
         record: this.record,
         first_name: this.first_name,
-        last_name: this.last_name,
+        last_name: this.last_name
       };
+    },
+    clearInputs() {
+      this.first_name = "";
+      this.last_name = "";
+    },
+    save(e) {
+      e.preventDefault();
+      const data = this.getData();
+      if (this.localModalType === "edit") {
+        this.$store.dispatch("editRecord", data);
+      } else if (this.localModalType === "add") {
+        this.$store.dispatch("addRecord", data);
+      }
       this.closeModal();
-      this.$store.commit("editRecord", data);
+      this.clearInputs();
     }
   }
 };

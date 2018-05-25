@@ -2,16 +2,20 @@
   <b-modal ref="myModalRef" hide-footer v-model="localModalShow" @hidden="closeModal" >
     <div>
       <EditionModal 
-        v-if="localModalType === 'edition-modal'" 
+        v-if="
+          localModalType === 'edit' ||
+          localModalType === 'add'
+        " 
         :record="record" 
-        :closeModal="closeModal" 
+        :closeModal="closeModal"
+        :localModalType="localModalType"
       />
     </div>
   </b-modal>
 </template>
 
 <script>
-import EditionModal from './EditionModal.vue';
+import EditionModal from "./EditionModal.vue";
 
 export default {
   name: "modal",
@@ -27,14 +31,14 @@ export default {
   data() {
     return {
       localModalShow: this.modalShow,
-      localModalType: this.modalType,
+      localModalType: this.modalType
     };
   },
   watch: {
-    modalShow: function() {
+    modalShow() {
       this.localModalShow = this.modalShow;
     },
-    modalType: function() {
+    modalType() {
       this.localModalType = this.modalType;
     }
   }

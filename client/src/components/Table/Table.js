@@ -7,7 +7,6 @@ export default {
       skill: '',
       fields: ['first_name', 'last_name', 'actions'],
       modalShow: false,
-      records: this.$store.state.records,
       record: null,
       modalType: null
     }
@@ -17,12 +16,21 @@ export default {
       this.modalShow = false;
     },
     removeRow(record) {
-      this.$store.commit('deleteRecord', { record });
+      this.$store.dispatch('deleteRecord', { record });
     },
     editRow(record, type) {
       this.record = record;
       this.modalType = type;
       this.modalShow = true;
+    },
+    addRow() {
+      this.modalType = 'add';
+      this.modalShow = true;
+    }
+  },
+  computed: {
+    records() {
+      return this.$store.state.records;
     }
   },
   components: {
