@@ -14,6 +14,7 @@ const specific = {
   dev: {
     app: {
       port: 3000,
+      secretkey: 'secretkey',
       staticServe: path.normalize(path.join(__dirname, '../../client/public')),
     },
     db: {

@@ -1,19 +1,24 @@
 const express = require('express');
 const http = require('http');
-const bodyparser = require('body-parser');
+const bodyParser = require('body-parser');
 const morgan = require('morgan');
-const app = express();
-const router = require('./routes/router');
+const app = new express();
+const routes = require('./routes/index');
 const cors = require('cors');
 
-app.use(morgan('combined'));
+const passport = require('../config/passport');
+
+app.use(passport.initialize());
+app.use(bodyParser.urlencoded({
+  extended: false
+}));
 app.use(cors());
-app.use(bodyparser.json({ type: '*/*' }))
+
+app.use(bodyParser.json());
+app.use(routes);
 
 
-router.configure(app);
 
 const port = process.env.PORT || 3001;
-const server = http.createServer(app);
-server.listen(port);
+app.listen(port);
 console.log('Server listening on:', port);

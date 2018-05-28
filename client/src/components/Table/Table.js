@@ -18,13 +18,9 @@ export default {
     removeRow(record) {
       this.$store.dispatch('deleteRecord', { record });
     },
-    editRow(record, type) {
+    handleAction(record = null, type) {
       this.record = record;
       this.modalType = type;
-      this.modalShow = true;
-    },
-    addRow() {
-      this.modalType = 'add';
       this.modalShow = true;
     }
   },

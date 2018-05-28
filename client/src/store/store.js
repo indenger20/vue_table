@@ -2,6 +2,7 @@ import Vue from 'vue';
 import Vuex from 'vuex';
 
 import DocumentService from '../services/DocumentService';
+import UserServices from '../services/UserServices';
 
 Vue.use(Vuex);
 
@@ -10,20 +11,21 @@ export default new Vuex.Store({
     records: [],
   },
   mutations: {
-    addRecord(state, { first_name, last_name }) {
-      state.records.push({
-        first_name,
-        last_name,
-      });
+    addRecord(state, record) {
+      state.records.push(record);
     },
 
-    deleteRecord(state, { record }) {
-      state.records.splice(state.records.indexOf(record), 1);
+    deleteRecord(state, record) {
+      state.records = state.records.filter(r => r.id !== record.id);
     },
 
-    editRecord(state, { record, first_name, last_name }) {
-      record.first_name = first_name;
-      record.last_name = last_name;
+    editRecord(state, record) {
+      state.records.forEach(r => {
+        if (r.id === record.id) {
+          r.first_name = record.first_name;
+          r.last_name = record.last_name;
+        }
+      })
     },
     updateRecords(state, records) {
       state.records = records;
@@ -31,20 +33,34 @@ export default new Vuex.Store({
   },
   actions: {
     addRecord({ commit }, data) {
-      commit('addRecord', data);
+      DocumentService.addRecord(data).then((response) => {
+        commit('addRecord', response.data);
+      });
     },
     deleteRecord({ commit }, { record }) {
       DocumentService.deleteRecord(record).then((response) => {
-        commit('deleteRecord', record);
-      })
+        commit('deleteRecord', response.data);
+      });
     },
     editRecord({ commit }, data) {
-      commit('editRecord', data);
+      DocumentService.editRecord(data).then((response) => {
+        commit('editRecord', response.data);
+      });
     },
     getAllRecords({ commit }) {
       DocumentService.getRecords().then((response) => {
-        commit('updateRecords', response.data)
-      })
+        commit('updateRecords', response.data);
+      }, (reject) =>{
+        commit('updateRecords', []);
+      });
+    },
+
+
+    //loginActions
+    login({ commit }, data) {
+      UserServices.login(data).then((user) => {
+        console.log(user);
+      });
     }
   }
 })

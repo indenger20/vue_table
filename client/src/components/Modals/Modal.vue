@@ -10,17 +10,23 @@
         :closeModal="closeModal"
         :localModalType="localModalType"
       />
+      <PreviewModal 
+        v-if="localModalType === 'preview'"
+        :record="record"
+      />
     </div>
   </b-modal>
 </template>
 
 <script>
 import EditionModal from "./EditionModal.vue";
+import PreviewModal from "./PreviewModal.vue";
 
 export default {
   name: "modal",
   components: {
-    EditionModal
+    EditionModal,
+    PreviewModal
   },
   props: {
     modalShow: Boolean,
