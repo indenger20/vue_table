@@ -4,7 +4,7 @@ import { getAxiosConfig } from '../helpers/auth';
 
 export default {
   getRecords() {
-    return axios.get(`${path}/api/records`, getAxiosConfig);
+    return axios.get(`${path}/api/records`, getAxiosConfig());
   },
   deleteRecord(record) {
     return axios.post(`${path}/api/records/delete`, { id: record.id });

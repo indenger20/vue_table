@@ -57,9 +57,9 @@ export default {
       e.preventDefault();
       const data = this.getData();
       if (this.localModalType === "edit") {
-        this.$store.dispatch("editRecord", data);
+        this.$store.dispatch("document/editRecord", data);
       } else if (this.localModalType === "add") {
-        this.$store.dispatch("addRecord", data);
+        this.$store.dispatch("document/addRecord", data);
       }
       this.closeModal();
       this.clearInputs();

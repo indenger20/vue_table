@@ -16,7 +16,7 @@ export default {
       this.modalShow = false;
     },
     removeRow(record) {
-      this.$store.dispatch('deleteRecord', { record });
+      this.$store.dispatch('document/deleteRecord', { record });
     },
     handleAction(record = null, type) {
       this.record = record;
@@ -26,7 +26,7 @@ export default {
   },
   computed: {
     records() {
-      return this.$store.state.records;
+      return this.$store.state.document.records;
     }
   },
   components: {

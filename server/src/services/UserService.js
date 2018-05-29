@@ -9,6 +9,14 @@ module.exports = {
       });
     });
   },
+  getUserById(id) {
+    return new Promise((resolve, reject) => {
+      client.query(`SELECT id, username FROM users WHERE id = '${id}'`, (error, results) => {
+        if (error) reject(error);
+        resolve(...results);
+      });
+    });
+  },
   authenticate(username, password) {
     return new Promise((resolve, reject) => {
       if (!username && !password) {
@@ -23,7 +31,7 @@ module.exports = {
         } else {
           return reject('Incorrect password');
         }
-      })
-    })
+      });
+    });
   },
 }

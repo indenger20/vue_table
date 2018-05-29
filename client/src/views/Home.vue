@@ -1,20 +1,6 @@
 <template>
   <div class="home">
-
-    <Table />
+    <h1>Landing Page</h1>
+    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. In quidem, accusamus maxime eveniet ut aliquid eos nesciunt doloremque ipsam optio quod vel? Eveniet velit ratione fuga veniam inventore suscipit tenetur. Deleniti doloribus quisquam quod porro corrupti possimus ab, cupiditate nemo excepturi ipsam saepe quasi veritatis ipsum eligendi unde asperiores officia!</p>
   </div>
 </template>
-
-<script>
-import Table from '@/components/Table/Table.vue'
-
-export default {
-  name: 'home',
-  components: {
-    Table
-  },
-  created() {
-    this.$store.dispatch('getAllRecords');
-  },
-}
-</script>

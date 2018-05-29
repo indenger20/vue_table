@@ -6,8 +6,14 @@ export const setToken = (token) => {
     return localStorage.setItem('token', token);
 }
 
-export const getAxiosConfig = {
-    headers: {
-        Authorization: `Bearer ${getToken()}`
+export const getAxiosConfig = () => {
+    return {
+        headers: {
+            Authorization: `Bearer ${getToken()}`
+        }
     }
+}
+
+export const removeToken = () => {
+    return localStorage.removeItem('token');
 }
