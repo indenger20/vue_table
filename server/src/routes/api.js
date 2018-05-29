@@ -4,11 +4,11 @@ const express = require('express');
 const router = express.Router();
 const DocumentService = require('../services/DocumentService');
 const config = require('../../config/config');
-const jwt = require('jsonwebtoken');
+const checkAuth = require('../middleware/auth');
 
 
   // main routes
-  router.get('/records', (eq, res, next) => {
+  router.get('/records', checkAuth, (eq, res, next) => {
     const { str, id } = eq.body;
     DocumentService.getRecords().then(resolve => {
       res.send(resolve);

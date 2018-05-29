@@ -11,6 +11,9 @@ module.exports = {
   },
   authenticate(username, password) {
     return new Promise((resolve, reject) => {
+      if (!username && !password) {
+        return reject('Empty fields');
+      }
       this.getUserByName(username).then(user => {
         if (user === undefined) {
           return reject('Incorrect username');

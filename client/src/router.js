@@ -7,15 +7,14 @@ import Login from './views/Login.vue';
 Vue.use(Router);
 
 const router = new Router({
-  mode: 'history',
-  hashbang: false,
-  base: __dirname,
+  redirect: {
+    '*': '/about'
+  },
   routes: [
     {
       path: '/',
       name: 'home',
-      component: Home,
-      meta: { auth: true }
+      component: Home
     },
     {
       path: '/about',
@@ -25,8 +24,7 @@ const router = new Router({
     {
       path: '/login',
       name: 'login',
-      component: Login,
-      meta: { auth: false }
+      component: Login
     }
   ]
 });

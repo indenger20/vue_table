@@ -6,14 +6,13 @@ const app = new express();
 const routes = require('./routes/index');
 const cors = require('cors');
 
-const passport = require('../config/passport');
 
-app.use(passport.initialize());
 app.use(bodyParser.urlencoded({
   extended: false
 }));
 app.use(cors());
 
+app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(routes);
 

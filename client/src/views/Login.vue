@@ -37,7 +37,8 @@ export default {
     };
   },
   methods: {
-    login() {
+    login(e) {
+      e.preventDefault();
       this.$store.dispatch("login", { username: this.username, password: this.password });
     }
   }

@@ -12,13 +12,16 @@
 </template>
 
 <script>
+
 export default {
   name: "app",
-  created() {
-    this.$auth.ready(function() {
-      console.log("ready " + this.context);
-    });
-  }
+  data() {
+    return {
+      
+    };
+  },
+  
+  created() {}
 };
 </script>
 

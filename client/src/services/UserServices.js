@@ -1,76 +1,19 @@
-import Vue from 'vue';
-
+import axios from 'axios';
+import { setToken } from '../helpers/auth';
 const path = 'http://localhost:3001';
 
-const API_URL = 'http://localhost:3001/'
-// const LOGIN_URL = API_URL + 'sessions/create/'
-const SIGNUP_URL = API_URL + 'users/'
 
 export default {
 
-  user: {
-    authenticated: false
-  },
-
   login({ username, password }) {
-    return Vue.axios.post(`${path}/auth/getToken`, {
+    return axios.post(`${path}/auth/login`, {
       username,
       password
     }).then(res => {
-      localStorage.setItem('token', res.data);
+      setToken(res.data.token);
       window.location = '/home';
+      return res;
     })
   },
 
-  // login(context, creds, redirect) {
-  //   context.$http.post(LOGIN_URL, creds, (data) => {
-  //     localStorage.setItem('id_token', data.id_token)
-
-  //     this.user.authenticated = true
-
-  //     if (redirect) {
-  //       // router.go(redirect)
-  //     }
-
-  //   }).error((err) => {
-  //     context.error = err
-  //   })
-  // },
-
-  signup(context, creds, redirect) {
-    context.$http.post(SIGNUP_URL, creds, (data) => {
-      localStorage.setItem('id_token', data.id_token)
-
-      this.user.authenticated = true
-
-      if (redirect) {
-        // router.go(redirect)
-      }
-
-    }).error((err) => {
-      context.error = err
-    })
-  },
-
-  logout() {
-    localStorage.removeItem('id_token')
-    this.user.authenticated = false
-  },
-
-  checkAuth() {
-    var jwt = localStorage.getItem('id_token')
-    if (jwt) {
-      this.user.authenticated = true
-    }
-    else {
-      this.user.authenticated = false
-    }
-  },
-
-
-  getAuthHeader() {
-    return {
-      'Authorization': 'Bearer ' + localStorage.getItem('id_token')
-    }
-  }
 }
