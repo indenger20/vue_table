@@ -4,8 +4,20 @@ export default {
   namespaced: true,
   state: {
     records: [],
+    sortDirection: {
+      type: null,
+      col: null
+    }
   },
   mutations: {
+    sortRecords(state, { type, col }) {
+      state.sortDirection = {
+        type,
+        col
+      };
+      DocumentService.sortRecords(state.records, type, col);
+    },
+
     addRecord(state, record) {
       state.records.push(record);
     },
@@ -24,6 +36,9 @@ export default {
     },
     updateRecords(state, records) {
       state.records = records;
+    },
+    reorder(state, { dropIndex, dragginIndex }) {
+      DocumentService.reorder(state.records, dropIndex, dragginIndex);
     }
   },
   actions: {
@@ -49,6 +64,11 @@ export default {
         commit('updateRecords', []);
       });
     },
-    
+    searchRecords({ commit }, query) {
+      DocumentService.searchRecords(query).then((response) => {
+        commit('updateRecords', response.data);
+      });
+    }
+
   }
 }

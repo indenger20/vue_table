@@ -1,14 +1,22 @@
--- fill in records
-INSERT INTO records(`created_at`, `title`, `comment`)
-VALUES(
-NOW(),
-"title1",
-"Some text1"
-);
+-- -- fill in records
+-- INSERT INTO records(`created_at`, `title`, `comment`)
+-- VALUES(
+-- NOW(),
+-- "title1",
+-- "Some text1"
+-- );
 
-INSERT INTO records(`created_at`, `title`, `comment`)
-VALUES(
-NOW(),
-"title2",
-"Some text2"
-);
+-- INSERT INTO records(`created_at`, `title`, `comment`)
+-- VALUES(
+-- NOW(),
+-- "title2",
+-- "Some text2"
+-- );
+
+-- -- fill in documents
+-- INSERT INTO documents(`created_at`, `title`, `comment`)
+-- VALUES(
+-- NOW(),
+-- "title2",
+-- "Some text2"
+-- );

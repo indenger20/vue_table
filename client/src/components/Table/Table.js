@@ -1,14 +1,29 @@
 import Modal from "../Modals/Modal.vue";
 
+const fields = [
+  {
+    title: 'first_name',
+    sort: true,
+  },
+  {
+    title: 'last_name',
+    sort: true,
+  },
+  {
+    title: 'Actions'
+  }
+]
+
 export default {
   name: 'Table',
   data() {
     return {
       skill: '',
-      fields: ['first_name', 'last_name', 'actions'],
+      fields,
       modalShow: false,
       record: null,
-      modalType: null
+      modalType: null,
+      dragginIndex: null
     }
   },
   methods: {
@@ -22,6 +37,20 @@ export default {
       this.record = record;
       this.modalType = type;
       this.modalShow = true;
+    },
+    handleSort(col, type) {
+      this.$store.commit('document/sortRecords', { col, type });
+    },
+    handleDrop(e, dropIndex) {
+      this.$store.commit('document/reorder', { dropIndex, dragginIndex: this.dragginIndex });
+      this.dragginIndex = null;
+    },
+    handleDrag(e, dragginIndex) {
+      if (!this.dragginIndex) {
+        this.dragginIndex = dragginIndex;
+      } else if (this.dragginIndex != dragginIndex) {
+        this.dragginIndex = dragginIndex;
+      }
     }
   },
   computed: {

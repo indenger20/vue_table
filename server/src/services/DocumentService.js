@@ -1,9 +1,9 @@
 const client = require('../db/client');
 
 module.exports = {
-  getRecords() {
+  getRecords(user_id) {
     return new Promise((resolve, reject) => {
-      client.query('SELECT `id`, `title` as `first_name`, `comment` as `last_name` FROM records', (error, results, fields) => {
+      client.query(`SELECT id, title as first_name, comment as last_name FROM records WHERE user_id = ${user_id}`, (error, results, fields) => {
         if (error) reject(error);
         resolve(results);
       });
@@ -40,11 +40,11 @@ module.exports = {
     });
   },
 
-  addRecord({ first_name, last_name }) {
+  addRecord({ first_name, last_name, user_id }) {
     return new Promise((resolve, reject) => {
       const record_id = new Promise((resolve, reject) => {
         client.query(`
-        INSERT INTO records (created_at, title, comment) VALUES(NOW(), '${first_name}', '${last_name}');
+        INSERT INTO records (created_at, title, comment, user_id) VALUES(NOW(), '${first_name}', '${last_name}', '${user_id}');
       `, (error, results, fields) => {
             if (error) reject(error);
             resolve(results.insertId);
@@ -63,6 +63,18 @@ module.exports = {
       `, (error, results, fields) => {
           if (error) reject(error);
           resolve(...results);
+        });
+    })
+  },
+
+  searchRecord(query) {
+    return new Promise((resolve, reject) => {
+      client.query(`
+        SELECT id, title as first_name, comment as last_name FROM records WHERE title LIKE '%${query}%'
+          OR comment LIKE '%${query}%'
+      `, (error, results, fields) => {
+          if (error) reject(error);
+          resolve(results);
         });
     })
   }

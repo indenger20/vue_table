@@ -9,7 +9,8 @@ export default {
   mutations: {
     singin(state, user) {
       state.user = user;
-      router.push('/');
+      const redirectPath = location.href.split('redirect=%2F');
+      router.push(`/${redirectPath.length > 1 ? redirectPath[1] : ''}`);
     },
     logout(state) {
       state.user = null;
@@ -18,21 +19,25 @@ export default {
   },
   actions: {
     singin({ commit }, data) {
+      const $this = this;
       UserServices.singin(data).then((result) => {
         const user = result.data;
         commit('singin', {
           username: user.username,
           id: user.id,
         });
+        $this.dispatch("document/getAllRecords");
       });
     },
     login({ commit }) {
+      const $this = this;
       UserServices.login().then((result) => {
         const user = result.data;
         commit('singin', {
           username: user.username,
           id: user.id,
         });
+        $this.dispatch("document/getAllRecords");
       });
     },
     logout({ commit }) {
