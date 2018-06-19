@@ -67,16 +67,13 @@ module.exports = {
     })
   },
 
-  searchRecord(query) {
+  getRecordsAll() {
     return new Promise((resolve, reject) => {
-      client.query(`
-        SELECT id, title as first_name, comment as last_name FROM records WHERE title LIKE '%${query}%'
-          OR comment LIKE '%${query}%'
-      `, (error, results, fields) => {
-          if (error) reject(error);
-          resolve(results);
-        });
-    })
+      client.query(`SELECT id, title as first_name, comment as last_name FROM records;`, (error, results, fields) => {
+        if (error) reject(error);
+        resolve(results);
+      });
+    });
   }
 
 }

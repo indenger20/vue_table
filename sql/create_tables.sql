@@ -11,6 +11,6 @@ CREATE TABLE if not exists users (
   username varchar(64) NOT NULL,
   `password` varchar(64) NOT NULL,
   email varchar(64) NOT NULL,
-  document_id varchar(16) NULL,
+  `group` varchar(64) NOT NULL,
   createdAt date
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;

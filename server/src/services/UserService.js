@@ -3,17 +3,17 @@ const client = require('../db/client');
 module.exports = {
   getUserByName(username) {
     return new Promise((resolve, reject) => {
-      client.query(`SELECT id, username, password FROM users WHERE username = '${username}';`, (error, results, fields) => {
+      client.query('SELECT id, username, password, `group` FROM users WHERE username = "' + username + '";', (error, results, fields) => {
         if (error) reject(error);
-        resolve(...results);
+        resolve(results[0]);
       });
     });
   },
   getUserById(id) {
     return new Promise((resolve, reject) => {
-      client.query(`SELECT id, username FROM users WHERE id = '${id}'`, (error, results) => {
+      client.query('SELECT id, username, `group` FROM users WHERE id = "' + id + '"', (error, results) => {
         if (error) reject(error);
-        resolve(...results);
+        resolve(results[0]);
       });
     });
   },
@@ -34,4 +34,7 @@ module.exports = {
       });
     });
   },
+  isAdmin(user) {
+    return user.group === 'admin';
+  }
 }

@@ -63,5 +63,5 @@ import Table from "./Table.js";
 
 export default Table;
 </script>
-<!-- Add "scoped" attribute to limit CSS to this component only -->
+
 <style src="./Table.css" scoped></style>

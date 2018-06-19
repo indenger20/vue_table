@@ -21,23 +21,25 @@ export default {
     singin({ commit }, data) {
       const $this = this;
       UserServices.singin(data).then((result) => {
-        const user = result.data;
-        commit('singin', {
-          username: user.username,
-          id: user.id,
-        });
-        $this.dispatch("document/getAllRecords");
+        const user = {
+          username: result.data.username,
+          id: result.data.id,
+          group: result.data.group,
+        }
+        commit('singin', user);
+        $this.dispatch("document/getAllRecords", user);
       });
     },
     login({ commit }) {
       const $this = this;
       UserServices.login().then((result) => {
-        const user = result.data;
-        commit('singin', {
-          username: user.username,
-          id: user.id,
-        });
-        $this.dispatch("document/getAllRecords");
+        const user = {
+          username: result.data.username,
+          id: result.data.id,
+          group: result.data.group,
+        }
+        commit('singin', user);
+        $this.dispatch("document/getAllRecords", user);
       });
     },
     logout({ commit }) {

@@ -7,23 +7,20 @@
 </template>
 
 <script>
-
 export default {
   name: "search",
 
-  props: {
-    
-  },
+  props: {},
   data() {
     return {
-        query: '',
+      query: ""
     };
   },
   methods: {
-      handleChange(e) {
-          this.$store.dispatch('document/searchRecords', this.query);
-      }
-  },
+    handleChange(e) {
+      this.$store.commit("document/searchRecords", this.query);
+    }
+  }
 };
 </script>
 

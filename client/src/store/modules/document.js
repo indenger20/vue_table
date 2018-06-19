@@ -39,6 +39,10 @@ export default {
     },
     reorder(state, { dropIndex, dragginIndex }) {
       DocumentService.reorder(state.records, dropIndex, dragginIndex);
+    },
+    searchRecords(state, query) {
+      const records = DocumentService.searchRecords(state.records, query);
+      state.records = records;
     }
   },
   actions: {
@@ -57,18 +61,12 @@ export default {
         commit('editRecord', response.data);
       });
     },
-    getAllRecords({ commit }) {
-      DocumentService.getRecords().then((response) => {
+    getAllRecords({ commit }, user) {
+      DocumentService.getRecords(user).then((response) => {
         commit('updateRecords', response.data);
       }, (reject) => {
         commit('updateRecords', []);
       });
     },
-    searchRecords({ commit }, query) {
-      DocumentService.searchRecords(query).then((response) => {
-        commit('updateRecords', response.data);
-      });
-    }
-
   }
 }

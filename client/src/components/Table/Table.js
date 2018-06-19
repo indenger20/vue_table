@@ -55,7 +55,7 @@ export default {
   },
   computed: {
     records() {
-      return this.$store.state.document.records;
+      return this.$store.state.document.records.filter(r => r.isInView !== false);
     }
   },
   components: {

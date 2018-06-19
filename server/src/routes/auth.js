@@ -2,7 +2,6 @@ const router = require('express').Router();
 const jwt = require('jsonwebtoken');
 const config = require('../../config/config');
 const UserServices = require('../services/UserService');
-const bcrypt = require('bcrypt');
 const checkAuth = require('../middleware/auth');
 
 router.post('/singin', (req, res, next) => {
@@ -10,7 +9,8 @@ router.post('/singin', (req, res, next) => {
   UserServices.authenticate(username, password).then(user => {
     const token = jwt.sign({
       username: user.username,
-      id: user.id
+      id: user.id,
+      group: user.group,
     },
       config.app.secretkey,
       {
@@ -21,7 +21,8 @@ router.post('/singin', (req, res, next) => {
       message: 'Auth successful',
       token,
       username: user.username,
-      id: user.id
+      id: user.id,
+      group: user.group,
     })
   }, error => {
     return res.status(500).json({
@@ -38,7 +39,8 @@ router.get('/login', checkAuth, (req, res, next) => {
       message: 'Auth successful',
       token,
       username: user.username,
-      id: user.id
+      group: user.group,
+      id: user.id,
     })
   }, err => {
     return res.status(500).json({
