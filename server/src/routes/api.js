@@ -39,6 +39,14 @@ router.get('/records/admin', isAdmin, (eq, res, next) => {
   DocumentService.getRecordsAll().then(resolve => {
     res.send(resolve);
   });
-})
+});
+
+router.get('/records/:query', (eq, res, next) => {
+  const query = eq.params.query;
+  const user_id = eq.userDate.id;
+  DocumentService.searchRecords(query, user_id).then(resolve => {
+    res.send(resolve);
+  });
+});
 
 module.exports = router;

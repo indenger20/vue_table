@@ -1,7 +1,7 @@
 const path = 'http://localhost:3001';
 import axios from 'axios';
 import { getAxiosConfig } from '../helpers/auth';
-import { sortAlphabetical, filterRecords } from '../helpers/utils';
+import { sortAlphabetical } from '../helpers/utils';
 
 export default {
   getRecords(user) {
@@ -20,8 +20,8 @@ export default {
   addRecord(data) {
     return axios.post(`${path}/api/records/`, data, getAxiosConfig());
   },
-  searchRecords(records, query) {
-    return filterRecords(records, query);
+  searchRecords(query) {
+    return axios.get(`${path}/api/records/${query}`, getAxiosConfig());
   },
   sortRecords(records, type, col) {
     if (type === 'Alphabetic') {

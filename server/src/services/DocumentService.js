@@ -74,6 +74,18 @@ module.exports = {
         resolve(results);
       });
     });
+  }, 
+
+  searchRecords(query, user_id) {
+    return new Promise((resolve, reject) => {
+      client.query(`SELECT id, title as first_name, comment as last_name FROM records 
+        WHERE user_id = ${user_id}
+        AND title LIKE '%${query}%'
+        OR comment LIKE '%${query}%';`, (error, results, fields) => {
+        if (error) reject(error);
+        resolve(results);
+      });
+    });
   }
 
 }

@@ -18,7 +18,7 @@ export default {
   },
   methods: {
     handleChange(e) {
-      this.$store.commit("document/searchRecords", this.query);
+      this.$store.dispatch("document/searchRecords", this.query);
     }
   }
 };

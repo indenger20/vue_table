@@ -40,10 +40,6 @@ export default {
     reorder(state, { dropIndex, dragginIndex }) {
       DocumentService.reorder(state.records, dropIndex, dragginIndex);
     },
-    searchRecords(state, query) {
-      const records = DocumentService.searchRecords(state.records, query);
-      state.records = records;
-    }
   },
   actions: {
     addRecord({ commit }, data) {
@@ -67,6 +63,13 @@ export default {
       }, (reject) => {
         commit('updateRecords', []);
       });
+    },
+    searchRecords({ commit }, query) {
+      DocumentService.searchRecords(query).then((response) => {
+        commit('updateRecords', response.data);
+      }, (reject) => {
+        commit('updateRecords', []);
+      })
     },
   }
 }
