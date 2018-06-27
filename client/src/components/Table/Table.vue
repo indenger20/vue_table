@@ -7,6 +7,7 @@
             <th 
               v-for="(field, index) in fields"
               v-bind:key="index"
+              :rowspan="field.colspan"
             >
               {{field.title}}
               <b-dropdown text="Sort" size="sm" v-if="field.sort">
@@ -23,11 +24,13 @@
             v-on:drop="(e) => handleDrop(e, index)"
             v-on:drag="(e) => handleDrag(e, index)"
           >
+            <td>{{item.order_id}}</td>
+            <td>{{item.img}}</td>
             <td>
-              {{item.first_name}}
+              {{item.title}}
             </td>
             <td>
-              {{item.last_name}}
+              {{item.price}}
             </td>
             <td>
               <b-dropdown text="Dropdown Button" size="sm">

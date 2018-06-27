@@ -1,7 +1,8 @@
 import Vue from 'vue';
 import Router from 'vue-router';
 import Home from './views/Home.vue';
-import More from './views/More.vue';
+import Cart from './views/Cart.vue';
+import Catalog from './views/Catalog.vue';
 import Login from './views/Login.vue';
 import store from './store/store';
 
@@ -18,10 +19,15 @@ const router = new Router({
       component: Home,
     },
     {
-      path: '/more',
-      name: 'more',
-      component: More,
+      path: '/cart',
+      name: 'cart',
+      component: Cart,
       meta: { requiresAuth: true }
+    },
+    {
+      path: '/catalog',
+      name: 'catalog',
+      component: Catalog,
     },
     {
       path: '/login',

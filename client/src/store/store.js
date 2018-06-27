@@ -4,6 +4,7 @@ import Vuex from 'vuex';
 
 import userStore from './modules/user';
 import documentStore from './modules/document';
+// import ordersStore from './modules/orders';
 
 Vue.use(Vuex);
 

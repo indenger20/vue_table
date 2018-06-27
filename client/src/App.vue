@@ -3,7 +3,8 @@
     <div class="container">
       <b-nav>
         <b-nav-item to="/">Home</b-nav-item>
-        <b-nav-item to="/more" v-if="$store.state.user.user">More</b-nav-item>
+        <!-- <b-nav-item to="/cart" v-if="$store.state.user.user">Cart</b-nav-item> -->
+        <b-nav-item to="/catalog">Catalog</b-nav-item>
         <b-nav-item to="/login" v-if="!$store.state.user.user">Login</b-nav-item>
         <b-nav-item @click="logout" v-if="$store.state.user.user">Logout</b-nav-item>
       </b-nav>

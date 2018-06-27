@@ -2,15 +2,23 @@ import Modal from "../Modals/Modal.vue";
 
 const fields = [
   {
-    title: 'first_name',
+    title: 'Order ID',
     sort: true,
+    colspan: 2,
   },
   {
-    title: 'last_name',
+    title: 'Title',
     sort: true,
+    colspan: 0,
   },
   {
-    title: 'Actions'
+    title: 'Price',
+    sort: true,
+    colspan: 0,
+  },
+  {
+    title: 'Actions',
+    colspan: 0,
   }
 ]
 
@@ -18,12 +26,11 @@ export default {
   name: 'Table',
   data() {
     return {
-      skill: '',
       fields,
       modalShow: false,
       record: null,
       modalType: null,
-      dragginIndex: null
+      dragginIndex: null,
     }
   },
   methods: {

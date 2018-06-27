@@ -1,5 +1,6 @@
 <template>
   <div>
+    <h1>Cart</h1>
     <Search />
     <Table />
   </div>
@@ -10,7 +11,7 @@ import Table from "@/components/Table/Table.vue";
 import Search from "@/components/Search/Search.vue";
 
 export default {
-  name: "more",
+  name: "cart",
   components: {
     Table,
     Search
