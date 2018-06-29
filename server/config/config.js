@@ -15,8 +15,8 @@ const specific = {
     app: {
       port: 3000,
       secretkey: 'secretkey',
-      staticServe: path.normalize(path.join(__dirname, '../../client/public')),
     },
+    imagesFolder: 'images',
     db: {
       user: 'root',
       pass: 'pass2sql',

@@ -18,25 +18,24 @@
         </thead>
         <transition-group tag="tbody" name="table-row" mode="out-in">
           <tr
-            v-for="(item, index) in records"
-            v-bind:key="item.id"
+            v-for="(order, index) in orders"
+            v-bind:key="order.order_id"
             v-drag-and-drop 
             v-on:drop="(e) => handleDrop(e, index)"
             v-on:drag="(e) => handleDrag(e, index)"
           >
-            <td>{{item.order_id}}</td>
-            <td>{{item.img}}</td>
+            <td>{{order.order_id}}</td>
             <td>
-              {{item.title}}
+              {{order.title}}
             </td>
             <td>
-              {{item.price}}
+              {{order.price}}
             </td>
             <td>
               <b-dropdown text="Dropdown Button" size="sm">
-                <b-dropdown-item @click="() => handleAction(item, 'edit')">Edit</b-dropdown-item>
-                <b-dropdown-item @click="() => removeRow(item)">Remove</b-dropdown-item>
-                <b-dropdown-item @click="() => handleAction(item, 'preview')">Preview</b-dropdown-item>
+                <b-dropdown-item @click="() => handleAction(order, 'edit')">Edit</b-dropdown-item>
+                <b-dropdown-item @click="() => removeRow(order)">Remove</b-dropdown-item>
+                <b-dropdown-item @click="() => handleAction(order, 'preview')">Preview</b-dropdown-item>
               </b-dropdown>
             </td>
           </tr>
@@ -54,7 +53,7 @@
     <modal 
       :modalShow="modalShow"
       :closeModal="closeModal"
-      :record="record"
+      :order="order"
       :modalType="modalType"
     ></modal>
     

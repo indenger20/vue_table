@@ -27,7 +27,7 @@ export default {
           group: result.data.group,
         }
         commit('singin', user);
-        $this.dispatch("document/getAllRecords", user);
+        $this.dispatch('orders/getAll', user);
       });
     },
     login({ commit }) {
@@ -39,12 +39,13 @@ export default {
           group: result.data.group,
         }
         commit('singin', user);
-        $this.dispatch("document/getAllRecords", user);
+        $this.dispatch('orders/getAll', user);
       });
     },
     logout({ commit }) {
       UserServices.logout();
       commit('logout');
+      this.commit('orders/clear');
     }
   },
   getters: {}

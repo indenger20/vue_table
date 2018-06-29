@@ -1,8 +1,8 @@
 CREATE TABLE if not exists orders (
 	id int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
 	`created_at` date,
-  `product_id`varchar(16) NOT NULL,
-  `user_id` varchar(16) NOT NULL
+  `product_id` int(16),
+  `user_id` int(16)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE if not exists users (

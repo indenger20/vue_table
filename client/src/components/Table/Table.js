@@ -28,7 +28,7 @@ export default {
     return {
       fields,
       modalShow: false,
-      record: null,
+      order: null,
       modalType: null,
       dragginIndex: null,
     }
@@ -37,19 +37,19 @@ export default {
     closeModal() {
       this.modalShow = false;
     },
-    removeRow(record) {
-      this.$store.dispatch('document/deleteRecord', { record });
-    },
-    handleAction(record = null, type) {
-      this.record = record;
-      this.modalType = type;
-      this.modalShow = true;
-    },
-    handleSort(col, type) {
-      this.$store.commit('document/sortRecords', { col, type });
-    },
+    // removeRow(record) {
+    //   this.$store.dispatch('document/deleteRecord', { record });
+    // },
+    // handleAction(record = null, type) {
+    //   this.record = record;
+    //   this.modalType = type;
+    //   this.modalShow = true;
+    // },
+    // handleSort(col, type) {
+    //   this.$store.commit('document/sortRecords', { col, type });
+    // },
     handleDrop(e, dropIndex) {
-      this.$store.commit('document/reorder', { dropIndex, dragginIndex: this.dragginIndex });
+      this.$store.commit('orders/reorder', { dropIndex, dragginIndex: this.dragginIndex });
       this.dragginIndex = null;
     },
     handleDrag(e, dragginIndex) {
@@ -61,8 +61,8 @@ export default {
     }
   },
   computed: {
-    records() {
-      return this.$store.state.document.records;
+    orders() {
+      return this.$store.state.orders.orders;
     }
   },
   components: {

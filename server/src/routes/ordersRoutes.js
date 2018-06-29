@@ -18,7 +18,9 @@ router.delete('/:id', async (eq, res, next) => {
 });
 
 router.post('/', async (eq, res, next) => {
-  const data = await OrderService.addOrder({ ...eq.body, user_id: eq.userDate.id });
+  const { product_id } = eq.body;
+  const user_id = eq.userDate.id;
+  const data = await OrderService.create({ product_id, user_id  });
   res.send(data);
 });
 

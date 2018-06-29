@@ -3,27 +3,16 @@ import OrdersService from '../../services/OrdersService';
 export default {
   namespaced: true,
   state: {
-    records: [],
-    sortDirection: {
-      type: null,
-      col: null
-    }
+    orders: [],
   },
   mutations: {
-    sortRecords(state, { type, col }) {
-      state.sortDirection = {
-        type,
-        col
-      };
-      OrdersService.sortRecords(state.records, type, col);
+    
+    clear(state) {
+      state.orders = [];
     },
 
-    addRecord(state, record) {
-      state.records.push(record);
-    },
-
-    deleteRecord(state, record) {
-      state.records = state.records.filter(r => r.id !== record.id);
+    deleteRecord(state, order) {
+      state.orders = state.orders.filter(o => o.id !== order.id);
     },
 
     editRecord(state, record) {
@@ -34,18 +23,18 @@ export default {
         }
       })
     },
-    updateRecords(state, records) {
-      state.records = records;
+    update(state, orders) {
+      state.orders = orders;
     },
     reorder(state, { dropIndex, dragginIndex }) {
-      OrdersService.reorder(state.records, dropIndex, dragginIndex);
+      OrdersService.reorder(state.orders, dropIndex, dragginIndex);
     },
   },
   actions: {
-    addRecord({ commit }, data) {
-      OrdersService.addRecord(data).then((response) => {
-        commit('addRecord', response.data);
-      });
+    async create({ commit }, product) {
+      const orders = await OrdersService.create(product.id);
+      commit('update', orders);
+      this.commit('document/inCart', product.id)
     },
     deleteRecord({ commit }, { record }) {
       OrdersService.deleteRecord(record).then((response) => {
@@ -57,12 +46,9 @@ export default {
         commit('editRecord', response.data);
       });
     },
-    getAllRecords({ commit }, user) {
-      OrdersService.getRecords(user).then((response) => {
-        commit('updateRecords', response.data);
-      }, (reject) => {
-        commit('updateRecords', []);
-      });
+    async getAll({ commit }, user) {
+      const orders = await OrdersService.getAll(user);
+      commit('update', orders);
     },
     searchRecords({ commit }, query) {
       OrdersService.searchRecords(query).then((response) => {

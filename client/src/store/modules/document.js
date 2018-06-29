@@ -9,6 +9,15 @@ export default {
     updateProducts(state, products) {
       state.products = products;
     },
+    inCart(state, product_id) {
+      const products = state.products.map(p => {
+        if (p.id === product_id) {
+          p.inCart = true;
+        }
+        return p;
+      })
+      state.products = products;
+    }
   },
   actions: {
     async getProducts({ commit }) {

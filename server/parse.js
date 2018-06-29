@@ -53,10 +53,14 @@ function getBody(url) {
 function getDescription(card) {
   return new Promise((resolve, reject) => {
     const descriptionLink = card.find('.card-link-section a').attr('href');
-    getBody(updatePath(descriptionLink)).then($ => {
-      const description = $('.cui-page-section.mmy-expert').html();
-      resolve(description);
-    })
+    if (descriptionLink) {
+      getBody(updatePath(descriptionLink)).then($ => {
+        const description = $('.cui-page-section.mmy-expert').html();
+        resolve(description);
+      })
+    } else {
+      resolve(null);
+    }
   })
 }
 
@@ -64,23 +68,29 @@ function getDescription(card) {
 async function importTable() {
   const $ = await getBody(url);
   const cards = $('.listingCard');
+  
+  try {
+    await Promise.all(cards.each(async (i, card) => {
+     
+      const title = $(card).find('.cui-delta').html();
+      let price = $(card).find('.msrp').html();
+      const description = await getDescription($(card));
+      const imgPath = $(card).find('.card-image-container .card-image').attr('data-image-src');
+      const fullPath = updatePath(imgPath);
 
-  await Promise.all(cards.each(async (i, card) => {
-    const title = $(card).find('.cui-delta').html();
-    const price = $(card).find('.msrp').html();
-    const description = await getDescription($(card));
-    const imgPath = $(card).find('.card-image-container .card-image').attr('data-image-src');
-    const fullPath = updatePath(imgPath);
-
-    if (imgPath && title && price) {
-      const image_name = await download(fullPath, `../images/car-${i}.png`);
-      client.query(`
-        insert into products(created_at, title, img, price, description)
-        values(now(), '${title}', '${image_name}', '${price}', '${description}');
-      `);
-    }
-
-  }));
+      if (imgPath && title && price) {
+        price = price.replace('$', '').replace(',', '');
+        const image_name = await download(fullPath, `../images/car-${i}.png`);
+        client.query(`
+          insert into products(created_at, title, img, price, description)
+          values(now(), '${title}', '${image_name}', '${price}', '${description}');
+        `);
+      }
+      
+    }));
+  } catch (err) {
+    console.log(err);
+  }
 }
 
 importTable();
