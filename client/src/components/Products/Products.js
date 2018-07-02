@@ -27,7 +27,4 @@ export default {
       return this.$store.state.orders.orders;
     }
   },
-  watch() {
-    
-  }
 }

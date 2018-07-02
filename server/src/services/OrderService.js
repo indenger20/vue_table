@@ -1,32 +1,26 @@
 const client = require('../db/client');
 
 module.exports = {
-  create({ product_id, user_id }) {
-    return new Promise((resolve, reject) => {
-      const promise = new Promise((resolve, reject) => {
-        client.query(`
-            INSERT INTO orders (created_at, product_id, user_id) VALUES(NOW(), '${product_id}', '${user_id}');
-          `, (error, results, fields) => {
-            if (error) reject(error);
-            resolve(results);
-          });
-      });
-      promise.then(() => {
-        this.getOrders(user_id).then(o => resolve(o));
-      })
-    });
+  async create({ product_id, user_id }) {
+    try {
+      await client.then(conn => conn.query(`INSERT INTO orders (created_at, product_id, user_id) VALUES(NOW(), '${product_id}', '${user_id}');`));
+      const orders = await this.getOrders(user_id);
+      return orders;
+    } catch(err) {
+      throw new Error(err);
+    }
   },
 
   getOrders(user_id) {
-    return new Promise((resolve, reject) => {
-      client.query(`
+    try {
+      const orders = client.then(conn => conn.query(`
           SELECT orders.id as order_id, orders.product_id, products.title, products.price, products.img 
           FROM orders INNER JOIN products ON orders.user_id = ${user_id} AND orders.product_id = products.id;
-        `, (error, results, fields) => {
-          if (error) reject(error);
-          resolve(results);
-        });
-    });
+        `));
+      return orders;
+    } catch (err) {
+      throw new Error(err);
+    }
   },
 
   //   deleteOrder(id) {

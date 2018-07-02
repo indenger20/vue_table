@@ -4,14 +4,17 @@ import { getAxiosConfig } from '../helpers/auth';
 import { sortAlphabetical } from '../helpers/utils';
 
 export default {
-  getAll(user) {
+  async getAll(user) {
     let fullPath = `${path}`;
     if (user.group === 'admin') {
       fullPath += 'admin';
     }
-    return new Promise((resolve, reject) => {
-      axios.get(fullPath, getAxiosConfig()).then(data => resolve(data.data));
-    })
+    try {
+      const data = await axios.get(fullPath, getAxiosConfig());
+      return data.data;
+    } catch(err) {
+      throw new Error(err);
+    }
   },
   deleteRecord(record) {
     return axios.delete(`${path}${record.id}`, getAxiosConfig());
@@ -19,10 +22,13 @@ export default {
   editRecord(data) {
     return axios.put(`${path}`, data, getAxiosConfig());
   },
-  create(product_id) {
-    return new Promise((resolve, reject) => {
-      axios.post(`${path}`, { product_id }, getAxiosConfig()).then(data => resolve(data.data));
-    })
+  async create(product_id) {
+    try {
+      const data = await axios.post(`${path}`, { product_id }, getAxiosConfig());
+      return data.data;
+    } catch(err) {
+      throw new Error(err);
+    }
   },
   searchRecords(query) {
     return axios.get(`${path}${query}`, getAxiosConfig());

@@ -10,7 +10,7 @@ Vue.use(Router);
 
 const router = new Router({
   redirect: {
-    '*': '/about'
+    '*': '/catalog'
   },
   routes: [
     {

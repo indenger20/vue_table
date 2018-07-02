@@ -44,6 +44,9 @@ const specific = {
         host: 'localhost',
       },
     },
+    pagination: {
+      limit: 9,
+    }
   },
 };
 

@@ -4,9 +4,10 @@ const config = require('../../config/config');
 const UserServices = require('../services/UserService');
 const checkAuth = require('../middleware/auth');
 
-router.post('/singin', (req, res, next) => {
-  const { password, username } = req.body
-  UserServices.authenticate(username, password).then(user => {
+router.post('/singin', async (req, res, next) => {
+  const { password, username } = req.body;
+  try {
+    const user = await UserServices.authenticate(username, password);
     const token = jwt.sign({
       username: user.username,
       id: user.id,
@@ -23,12 +24,13 @@ router.post('/singin', (req, res, next) => {
       username: user.username,
       id: user.id,
       group: user.group,
-    })
-  }, error => {
+    });
+  } catch (err) {
     return res.status(500).json({
-      error
+      err: err.message
     })
-  })
+  }
+
 });
 
 router.get('/login', checkAuth, (req, res, next) => {

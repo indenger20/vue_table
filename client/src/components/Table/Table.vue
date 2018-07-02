@@ -39,13 +39,6 @@
               </b-dropdown>
             </td>
           </tr>
-          <tr v-bind:key="'addButton'">
-            <td>
-              <b-button variant="primary" @click="() => handleAction(null, 'add')">Add Row</b-button>
-            </td>
-            <td></td>
-            <td></td>
-          </tr>
         </transition-group>
         
       </table>

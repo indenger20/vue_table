@@ -1,38 +1,40 @@
 const client = require('../db/client');
 
 module.exports = {
-  getUserByName(username) {
-    return new Promise((resolve, reject) => {
-      client.query('SELECT id, username, password, `group` FROM users WHERE username = "' + username + '";', (error, results, fields) => {
-        if (error) reject(error);
-        resolve(results[0]);
-      });
-    });
+  async getUserByName(username) {
+    try {
+      const user = await client.then(conn => conn.query(`SELECT id, username, password, 'group' FROM users WHERE username = '${username}'`));
+      return user[0];
+    } catch (err) {
+      throw new Error(err);
+    }
   },
-  getUserById(id) {
-    return new Promise((resolve, reject) => {
-      client.query('SELECT id, username, `group` FROM users WHERE id = "' + id + '"', (error, results) => {
-        if (error) reject(error);
-        resolve(results[0]);
-      });
-    });
+  async getUserById(id) {
+    try {
+      const user = await client.then(conn => conn.query(`SELECT id, username, 'group' FROM users WHERE id = ${id}`));
+      return user[0];
+    } catch (err) {
+      throw new Error(err);
+    }
   },
-  authenticate(username, password) {
-    return new Promise((resolve, reject) => {
+  async authenticate(username, password) {
+    try {
       if (!username && !password) {
-        return reject('Empty fields');
+        throw new Error('Empty fields');
       }
-      this.getUserByName(username).then(user => {
-        if (user === undefined) {
-          return reject('Incorrect username');
-        }
-        if (user.password === password) {
-          return resolve(user);
-        } else {
-          return reject('Incorrect password');
-        }
-      });
-    });
+      const user = await this.getUserByName(username);
+      if (user === undefined) {
+        throw new Error('Incorrect username');
+      }
+      if (user.password === password) {
+        return user;
+      } else {
+        throw new Error('Incorrect password');
+      }
+    } catch (err) {
+      throw new Error(err);
+    }
+
   },
   isAdmin(user) {
     return user.group === 'admin';

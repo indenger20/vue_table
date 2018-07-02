@@ -10,9 +10,15 @@ const checkAuth = require('../middleware/checkAuth');
 // main routes
 router.use('/orders', ordersRoutes);
 
-router.get('/products', checkAuth, async (eq, res, next) => {
+router.get('/products/:page', checkAuth, async (eq, res, next) => {
   const user_id = eq.userDate ? eq.userDate.id : null;
-  const data = await DocumentService.getProducts(user_id);
+  const page = +eq.params.page;
+  const data = await DocumentService.getProducts(user_id, page);
+  res.send(data);
+});
+
+router.post('/products/pages', async (eq, res, next) => {
+  const data = await DocumentService.getPagesCount();
   res.send(data);
 });
 

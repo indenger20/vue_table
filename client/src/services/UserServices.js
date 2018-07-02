@@ -5,18 +5,27 @@ import { getAxiosConfig, removeToken } from '../helpers/auth';
 
 export default {
 
-  singin({ username, password }) {
-    return axios.post(`${path}/auth/singin`, {
-      username,
-      password
-    }).then(res => {
-      setToken(res.data.token);
-      return res;
-    })
+  async singin({ username, password }) {
+    try {
+      const data = await axios.post(`${path}/auth/singin`, {
+        username,
+        password
+      });
+      setToken(data.data.token);
+      return data.data;
+    } catch (err) {
+      throw new Error(err);
+    }
   },
 
-  login() {
-    return axios.get(`${path}/auth/login`, getAxiosConfig());
+  async login() {
+    try {
+      const data = await axios.get(`${path}/auth/login`, getAxiosConfig());
+      return data.data;
+    } catch (err) {
+      throw new Error(err);
+    }
+
   },
 
   logout() {

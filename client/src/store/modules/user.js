@@ -18,34 +18,33 @@ export default {
     }
   },
   actions: {
-    singin({ commit }, data) {
+    async singin({ commit }, data) {
       const $this = this;
-      UserServices.singin(data).then((result) => {
-        const user = {
-          username: result.data.username,
-          id: result.data.id,
-          group: result.data.group,
-        }
-        commit('singin', user);
-        $this.dispatch('orders/getAll', user);
-      });
+      const result = await UserServices.singin(data);
+      const user = {
+        username: result.username,
+        id: result.id,
+        group: result.group,
+      }
+      commit('singin', user);
+      $this.dispatch('orders/getAll', user);
     },
-    login({ commit }) {
+    async login({ commit }) {
       const $this = this;
-      UserServices.login().then((result) => {
-        const user = {
-          username: result.data.username,
-          id: result.data.id,
-          group: result.data.group,
-        }
-        commit('singin', user);
-        $this.dispatch('orders/getAll', user);
-      });
+      const result = await UserServices.login();
+      const user = {
+        username: result.username,
+        id: result.id,
+        group: result.group,
+      }
+      commit('singin', user);
+      $this.dispatch('orders/getAll', user);
     },
     logout({ commit }) {
       UserServices.logout();
       commit('logout');
       this.commit('orders/clear');
+      this.commit('document/clear');
     }
   },
   getters: {}

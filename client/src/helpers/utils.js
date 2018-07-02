@@ -13,3 +13,14 @@ export const formatUSD = (value) => {
     currency: 'USD',
   });
 };
+
+
+export const setPaginationToLocalStorage = (pagination) => {
+  if (pagination) {
+    window.localStorage.setItem('pagination', JSON.stringify(pagination));
+  }
+};
+
+export const getPaginationFromLocalStorage = () => {
+  return JSON.parse(window.localStorage.getItem('pagination'));
+}
