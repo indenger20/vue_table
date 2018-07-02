@@ -24,6 +24,9 @@ export default {
   watch: {
     currentPage() {
       this.currentPageLocal = this.currentPage;
+    },
+    pages() {
+      this.pagesLocal = this.pages;
     }
   },
   computed: {}
