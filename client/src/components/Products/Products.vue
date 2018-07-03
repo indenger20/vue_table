@@ -9,7 +9,7 @@
         <div class="products__image">
           <img class="products__img" :src="require(`@/../../images/${product.img}`)"  alt="">
         </div>
-        <span class="products__title">{{product.title}}</span>
+        <span class="products__title" @click="() => getProductInfo(product.id)">{{product.title}}</span>
         <div class="products__more">
           <span class="products__price">{{formatPrice(product.price)}}</span>
         </div>

@@ -1,15 +1,23 @@
 <template>
   <div id="app">
-    <div class="container">
-      <b-nav>
-        <b-nav-item to="/">Home</b-nav-item>
-        <b-nav-item to="/cart" v-if="$store.state.user.user && $store.state.orders.orders.length">Cart</b-nav-item>
-        <b-nav-item to="/catalog">Catalog</b-nav-item>
-        <b-nav-item to="/login" v-if="!$store.state.user.user">Login</b-nav-item>
-        <b-nav-item @click="logout" v-if="$store.state.user.user">Logout</b-nav-item>
-      </b-nav>
-      <router-view />
-    </div>
+    <header class="header">
+      <nav class="header-nav">
+        <div class="container">
+          <b-nav>
+            <b-nav-item to="/">Home</b-nav-item>
+            <b-nav-item to="/cart" v-if="$store.state.user.user && $store.state.orders.orders.length">Cart</b-nav-item>
+            <b-nav-item to="/catalog">Catalog</b-nav-item>
+            <b-nav-item to="/login" v-if="!$store.state.user.user" class="right">Login</b-nav-item>
+            <b-nav-item @click="logout" v-if="$store.state.user.user" class="right">Logout</b-nav-item>
+          </b-nav>
+        </div>
+      </nav>
+    </header>
+    <main class="wrapper">
+      <div class="container">
+        <router-view />
+      </div>
+    </main>
   </div>
 </template>
 
@@ -36,16 +44,3 @@ export default {
   }
 };
 </script>
-
-<style>
-#app {
-  font-family: "Avenir", Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  color: #2c3e50;
-}
-
-.search-form {
-  margin-top: 50px;
-}
-</style>

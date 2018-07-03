@@ -1,4 +1,5 @@
 import Modal from "../Modals/Modal.vue";
+import { formatUSD } from '../../helpers/utils';
 
 const fields = [
   {
@@ -37,17 +38,12 @@ export default {
     closeModal() {
       this.modalShow = false;
     },
-    // removeRow(record) {
-    //   this.$store.dispatch('document/deleteRecord', { record });
-    // },
-    // handleAction(record = null, type) {
-    //   this.record = record;
-    //   this.modalType = type;
-    //   this.modalShow = true;
-    // },
-    // handleSort(col, type) {
-    //   this.$store.commit('document/sortRecords', { col, type });
-    // },
+    removeOrder(order) {
+      this.$store.dispatch('orders/removeOrder', { order });
+    },
+    formatPrice(value) {
+      return formatUSD(+value);
+    },
     handleDrop(e, dropIndex) {
       this.$store.commit('orders/reorder', { dropIndex, dragginIndex: this.dragginIndex });
       this.dragginIndex = null;

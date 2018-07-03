@@ -4,6 +4,7 @@ import Home from './views/Home.vue';
 import Cart from './views/Cart.vue';
 import Catalog from './views/Catalog.vue';
 import Login from './views/Login.vue';
+import ProductInfo from './views/ProductInfo.vue';
 import store from './store/store';
 
 Vue.use(Router);
@@ -33,6 +34,11 @@ const router = new Router({
       path: '/login',
       name: 'login',
       component: Login
+    },
+    {
+      path: '/productInfo',
+      name: 'productInfo',
+      component: ProductInfo
     }
   ]
 });

@@ -6,7 +6,7 @@ export default {
     orders: [],
   },
   mutations: {
-    
+
     clear(state) {
       state.orders = [];
     },
@@ -34,28 +34,18 @@ export default {
     async create({ commit }, product) {
       const orders = await OrdersService.create(product.id);
       commit('update', orders);
-      this.commit('document/inCart', product.id)
+      this.commit('document/inCart', product.id);
     },
-    deleteRecord({ commit }, { record }) {
-      OrdersService.deleteRecord(record).then((response) => {
-        commit('deleteRecord', response.data);
-      });
+    async removeOrder({ commit }, { order }) {
+      const orders = await OrdersService.removeOrder(order);
+      commit('update', orders);
+      this.commit('document/fromCart', order.product_id);
     },
-    editRecord({ commit }, data) {
-      OrdersService.editRecord(data).then((response) => {
-        commit('editRecord', response.data);
-      });
-    },
+
     async getAll({ commit }, user) {
       const orders = await OrdersService.getAll(user);
       commit('update', orders);
     },
-    searchRecords({ commit }, query) {
-      OrdersService.searchRecords(query).then((response) => {
-        commit('updateRecords', response.data);
-      }, (reject) => {
-        commit('updateRecords', []);
-      })
-    },
+
   }
 }

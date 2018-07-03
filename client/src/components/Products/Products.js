@@ -14,6 +14,9 @@ export default {
     },
     formatPrice(value) {
       return formatUSD(+value);
+    },
+    getProductInfo(product_id) {
+      this.$store.commit('document/getInformation', product_id)
     }
   },
   computed: {

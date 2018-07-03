@@ -10,9 +10,9 @@
               :rowspan="field.colspan"
             >
               {{field.title}}
-              <b-dropdown text="Sort" size="sm" v-if="field.sort">
+              <!-- <b-dropdown text="Sort" size="sm" v-if="field.sort">
                 <b-dropdown-item @click="() => handleSort(field.title, 'Alphabetic')">Alphabetic</b-dropdown-item>
-              </b-dropdown>
+              </b-dropdown> -->
             </th>
           </tr>
         </thead>
@@ -20,7 +20,7 @@
           <tr
             v-for="(order, index) in orders"
             v-bind:key="order.order_id"
-            v-drag-and-drop 
+            v-drag-and-drop
             v-on:drop="(e) => handleDrop(e, index)"
             v-on:drag="(e) => handleDrag(e, index)"
           >
@@ -29,14 +29,10 @@
               {{order.title}}
             </td>
             <td>
-              {{order.price}}
+              {{formatPrice(order.price)}}
             </td>
             <td>
-              <b-dropdown text="Dropdown Button" size="sm">
-                <b-dropdown-item @click="() => handleAction(order, 'edit')">Edit</b-dropdown-item>
-                <b-dropdown-item @click="() => removeRow(order)">Remove</b-dropdown-item>
-                <b-dropdown-item @click="() => handleAction(order, 'preview')">Preview</b-dropdown-item>
-              </b-dropdown>
+              <span @click="() => removeOrder(order)" class="remove"></span>
             </td>
           </tr>
         </transition-group>
@@ -59,4 +55,4 @@ import Table from "./Table.js";
 export default Table;
 </script>
 
-<style src="./Table.css" scoped></style>
+<style src="./Table.scss" lang="scss" scoped></style>

@@ -1,4 +1,5 @@
 import DocumentService from '../../services/DocumentService';
+import router from '../../router';
 import {
   setPaginationToLocalStorage,
   getPaginationFromLocalStorage,
@@ -13,6 +14,7 @@ export default {
     page: null,
     pages: null,
     limit: null,
+    information: null,
   },
   mutations: {
     clear(state) {
@@ -41,14 +43,26 @@ export default {
         return p;
       })
       state.products = products;
+    },
+    fromCart(state, product_id) {
+      const products = state.products.map(p => {
+        if (p.id === product_id) {
+          p.inCart = false;
+        }
+        return p;
+      })
+      state.products = products;
+    },
+    setInformation(state, info) {
+      state.information = info;
+    },
+    getInformation(state, product_id) {
+      router.push({ path: 'productInfo', query: { product_id }});
     }
   },
   actions: {
     async getProducts({ commit }, pageCount) {
-
       let pagination = getPaginationFromLocalStorage();
-
-
       if (pagination) {
         pagination = {
           ...pagination,
@@ -79,6 +93,10 @@ export default {
       }
 
       commit('updatePagination', pagination);
+    },
+    async getInformation({commit}, product_id) {
+      const info = await DocumentService.getInformation(product_id);
+      commit('setInformation', info);
     }
   }
 }

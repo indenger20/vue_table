@@ -41,6 +41,15 @@ module.exports = {
     } catch (err) {
       console.log(err);
     }
+  },
+
+  async getInformation(product_id) {
+    try {
+      const info = await client.then(conn => conn.query(`SELECT description FROM products WHERE id = ${product_id}`));
+      return info[0].description;
+    } catch (err) {
+      console.log(err);
+    }
   }
 
 }

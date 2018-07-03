@@ -21,6 +21,15 @@ export default {
     } catch (err) {
       throw new Error(err);
     }
+  },
+
+  async getInformation(product_id) {
+    try {
+      const data = await axios.get(`${fullPath}information/${product_id}`, getAxiosConfig());
+      return data.data;
+    } catch (err) {
+      throw new Error(err);
+    }
   }
 
 }

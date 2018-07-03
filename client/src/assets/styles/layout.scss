@@ -1,3 +1,49 @@
 body {
     display: block;
 }
+
+.header {
+    background: #f4f4f4;
+    padding: 20px 0;
+    box-shadow: 0px 0px 14px 0px rgba(0,0,0,0.75);
+}
+
+.wrapper {
+    padding-top: 30px;
+}
+
+.header-nav {
+    .nav {
+        margin: 0 -15px;
+    }
+    .nav-item {
+        padding: 0 15px;
+        &.right {
+            margin: 0 0 0 auto;
+        }
+    }
+    .nav-link {
+        color: #34495e;
+        font-size: 18px;
+        padding: 0;
+        position: relative;
+        transition: all .3s;
+        &:before {
+            @include before-img(0, 1px);
+            transition: all .3s;
+            background: #718daa;
+            left: 0;
+            bottom: 0;
+        }
+        &:hover {
+            transition: all .3s;
+            &:before {
+                width: 50%;
+            }
+        }
+        &.active {
+            transition: all .3s;
+            color: #718daa;
+        }
+    }
+}

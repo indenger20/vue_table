@@ -22,4 +22,10 @@ router.post('/products/pages', async (eq, res, next) => {
   res.send(data);
 });
 
+router.get('/products/information/:id', async (eq, res, next) => {
+  const product_id = +eq.params.id;
+  const data = await DocumentService.getInformation(product_id);
+  res.send(data);
+})
+
 module.exports = router;
