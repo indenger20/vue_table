@@ -1,4 +1,4 @@
-const mysql = require('mysql');
+const mysql = require('promise-mysql');
 const config = require('./config/config');
 
 const request = require("request");
@@ -17,7 +17,7 @@ const client = mysql.createConnection({
   password: db_config.pass,
   database: db_config.database
 });
-client.connect();
+
 
 const updatePath = (url) => {
   return /^http:\/\/|^https:\/\//.test(url) ? url : `https://www.cars.com${url}`;
@@ -64,14 +64,26 @@ function getDescription(card) {
   })
 }
 
-
 async function importTable() {
   const $ = await getBody(url);
   const cards = $('.listingCard');
-  
+
   try {
-    await Promise.all(cards.each(async (i, card) => {
-     
+    let arrayOfMakes = [];
+    await Promise.resolve(cards.each((i, card) => {
+      const title = $(card).find('.cui-delta').html();
+      if (title) {
+        const make_name = title.split(' ')[1];
+        arrayOfMakes.push(make_name);
+      }
+    }));
+    arrayOfMakes = arrayOfMakes.filter((m, i, arr) => arr.indexOf(m) === i);
+    const makes = await Promise.all(arrayOfMakes.map(async (m) => {
+      const res = await client.then(conn => conn.query(`insert into makes(title) values('${m}')`));
+      return { id: res.insertId, title: m };
+    }));
+
+    await Promise.resolve(cards.each(async (i, card) => {
       const title = $(card).find('.cui-delta').html();
       let price = $(card).find('.msrp').html();
       const description = await getDescription($(card));
@@ -81,13 +93,19 @@ async function importTable() {
       if (imgPath && title && price) {
         price = price.replace('$', '').replace(',', '');
         const image_name = await download(fullPath, `../images/car-${i}.png`);
-        client.query(`
-          insert into products(created_at, title, img, price, description)
-          values(now(), '${title}', '${image_name}', '${price}', '${description}');
-        `);
+
+        const make_name = title.split(' ')[1];
+        const makeId = makes.find(m => m.title === make_name).id;
+
+        client.then(conn => conn.query(`
+          insert into products(created_at, title, img, price, make_id, description)
+          values(now(), '${title}', '${image_name}', '${price}', '${makeId}', '${description}');
+        `));
+
       }
-      
+
     }));
+    console.log('finish');
   } catch (err) {
     console.log(err);
   }

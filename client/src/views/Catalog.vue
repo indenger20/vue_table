@@ -1,20 +1,31 @@
 <template>
   <div>
     <h1>Catalog</h1>
-    <Products />
-    <Pagination :pages="pages" :currentPage="page" :changePage="changePage" />
+    <div class="content">
+      <div class="content__aside">
+        <aside>
+          <Filters />
+        </aside>
+      </div>
+      <div class="content__main">
+        <Products />
+        <Pagination :pages="pages" :currentPage="page" :changePage="changePage" :limit="limit" />
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
 import Products from "@/components/Products/Products.vue";
 import Pagination from "@/components/Pagination/Pagination.vue";
+import Filters from "@/components/Filters/Filters.vue";
 
 export default {
   name: "catalog",
   components: {
     Products,
-    Pagination
+    Pagination,
+    Filters
   },
 
   methods: {
@@ -28,12 +39,10 @@ export default {
     },
     pages() {
       return this.$store.state.document.pages;
+    },
+    limit() {
+      return this.$store.state.document.limit;
     }
   },
-  created() {
-    if (this.$store.state.document.products.length === 0) {
-      this.$store.dispatch("document/getProducts");
-    }
-  }
 };
 </script>

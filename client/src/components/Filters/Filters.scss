@@ -1,0 +1,43 @@
+.filters {
+    &__row {
+        padding-bottom: 30px;
+        &:last-child {
+            padding-bottom: 0;
+        }
+    }
+
+    &__title {
+        display: block;
+        font-size: 18px;
+        padding-bottom: 10px;
+    }
+
+    &__box {
+        overflow: auto;
+        max-height: 200px;
+        padding: 0 15px;
+        margin-bottom: 25px;
+        &--visible {
+            overflow: visible;
+        }
+    }
+
+    .custom-control {
+        display: block;
+        font-size: 14px;
+        user-select: none;
+    }
+
+    &__clear {
+        
+    }
+
+    .vue-slider-component {
+        margin-top: 50px;
+    }
+
+    &__buttons {
+        display: flex;
+        justify-content: space-between;
+    }
+}

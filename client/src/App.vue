@@ -37,7 +37,7 @@ export default {
 
   created() {
     const token = getToken();
-    this.$store.dispatch("document/getPagesCount");
+    this.$store.dispatch("document/getList");
     if (this.$store.state.user.user === null && token) {
       this.$store.dispatch("user/login");
     }

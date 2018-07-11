@@ -7,16 +7,18 @@ const fullPath = `${path}/api/products/`;
 export default {
   async getProducts(currentPage) {
     try {
-      const data = await axios.get(`${fullPath}${currentPage}`, getAxiosConfig());
+      const filterQuery = window.location.search;
+      const data = await axios.get(`${fullPath}${currentPage}${filterQuery}`, getAxiosConfig());
       return data.data;
     } catch (err) {
       throw new Error(err);
     }
   },
 
-  async getPagesCount() {
+  async getFullList(currentPage) {
     try {
-      const data = await axios.post(`${fullPath}pages/`, getAxiosConfig());
+      const filterQuery = window.location.search;
+      const data = await axios.get(`${fullPath}list/${currentPage}${filterQuery}`, getAxiosConfig());
       return data.data;
     } catch (err) {
       throw new Error(err);

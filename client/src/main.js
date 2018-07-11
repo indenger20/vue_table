@@ -10,7 +10,6 @@ import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap-vue/dist/bootstrap-vue.css';
 import Drag_Drop from 'vue-drag-and-drop';
 
-
 Vue.use(BootstrapVue);
 Vue.use(Drag_Drop);
 

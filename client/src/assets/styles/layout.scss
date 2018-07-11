@@ -6,10 +6,25 @@ body {
     background: #f4f4f4;
     padding: 20px 0;
     box-shadow: 0px 0px 14px 0px rgba(0,0,0,0.75);
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 99;
 }
 
 .wrapper {
-    padding-top: 30px;
+    padding-top: 97px;
+}
+
+.back-arrow {
+    display: block;
+    background: url('../../assets/img/left-arrow.svg') no-repeat;
+    background-size: cover; 
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+    margin: 10px 0 10px -35px;
 }
 
 .header-nav {
@@ -45,5 +60,17 @@ body {
             transition: all .3s;
             color: #718daa;
         }
+    }
+}
+
+
+.content {
+    display: flex;
+    &__aside {
+        width: 300px;
+    }
+    &__main {
+        width: calc(100% - 300px);
+        padding-left: 30px;
     }
 }

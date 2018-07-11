@@ -1,13 +1,17 @@
 <template>
   <div>
     <h1>About Product</h1>
-    <span @click="() => handleBack()" class="back">back</span>
-    <div v-html="information"></div>
+    <span @click="() => handleBack()" class="back-arrow"></span>
+    <div v-html="information" v-if="information !== null"></div>
+    <div v-if="information === null">
+      <h3>Information is not found</h3>
+    </div>
   </div>
 </template>
 
 <script>
 import router from "@/router";
+
 export default {
   name: "productInfo",
 

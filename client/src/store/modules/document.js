@@ -3,6 +3,8 @@ import router from '../../router';
 import {
   setPaginationToLocalStorage,
   getPaginationFromLocalStorage,
+  UpdateQueryString,
+  getFilterFromQuery,
 } from "../../helpers/utils";
 
 
@@ -15,6 +17,10 @@ export default {
     pages: null,
     limit: null,
     information: null,
+    makes: [],
+    filter: {
+      price: [0, 500000],
+    },
   },
   mutations: {
     clear(state) {
@@ -22,6 +28,7 @@ export default {
       state.page = null;
       state.pages = null;
       state.limit = null;
+      state.filter = { price: [0, 500000] };
     },
     updateProducts(state, products) {
       state.products = products;
@@ -29,11 +36,13 @@ export default {
     updatePagination(state, pagination) {
       setPaginationToLocalStorage(pagination);
       if (pagination) {
-        state
         state.page = pagination.page;
         state.pages = pagination.pages;
         state.limit = pagination.limit;
       }
+    },
+    updateMakes(state, makes) {
+      state.makes = makes;
     },
     inCart(state, product_id) {
       const products = state.products.map(p => {
@@ -57,7 +66,13 @@ export default {
       state.information = info;
     },
     getInformation(state, product_id) {
-      router.push({ path: 'productInfo', query: { product_id }});
+      router.push({ path: 'productInfo', query: { product_id } });
+    },
+    updateFilter(state) {
+      state.filter = getFilterFromQuery();
+    },
+    resetSlider(state) {
+      state.filter = { price: [0, 500000] };
     }
   },
   actions: {
@@ -69,34 +84,57 @@ export default {
           page: pageCount || pagination.page,
         };
       }
-
-      const products = await DocumentService.getProducts(pageCount || pagination ? pagination.page : 1);
+      const { products } = await DocumentService.getProducts(pageCount || pagination ? pagination.page : 1);
       commit('updateProducts', products);
       commit('updatePagination', pagination);
     },
-    async getPagesCount({ commit }) {
-      const { pages, limit } = await DocumentService.getPagesCount();
+
+    async getList({ commit }) {
       let pagination = getPaginationFromLocalStorage();
+      const { pages, makes, products } = await DocumentService.getFullList(pagination ? pagination.page : 1);
 
       if (pagination) {
         pagination = {
           ...pagination,
-          pages,
-          limit
+          pages: pages.pages,
+          limit: pages.limit,
         };
       } else {
         pagination = {
           page: 1,
-          pages,
-          limit
+          pages: pages.pages,
+          limit: pages.limit,
         };
       }
 
+      commit('updateProducts', products);
       commit('updatePagination', pagination);
+      commit('updateMakes', makes);
+      commit('updateFilter');
     },
-    async getInformation({commit}, product_id) {
+
+    async getInformation({ commit }, product_id) {
       const info = await DocumentService.getInformation(product_id);
       commit('setInformation', info);
+    },
+
+    async updateFilter({ commit }, data) {
+      let url = null;
+      for (const key in data) {
+        url = UpdateQueryString(key, data[key], url);
+      }
+      window.history.replaceState({}, '', url);
+      let pagination = getPaginationFromLocalStorage();
+      const { products, pages } = await DocumentService.getProducts(pagination.page);
+      pagination = {
+        page: 1,
+        limit: pages.limit,
+        pages: pages.pages
+      };
+
+      commit('updatePagination', pagination);
+      commit('updateFilter');
+      commit('updateProducts', products);
     }
   }
 }

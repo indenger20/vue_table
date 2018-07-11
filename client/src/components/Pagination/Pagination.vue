@@ -1,5 +1,5 @@
 <template>
-  <b-pagination @change="changeHandle" size="md" :total-rows="100" v-model="currentPageLocal" :per-page="pagesLocal"></b-pagination>
+  <b-pagination @change="changeHandle" size="md" :total-rows="pagesLocal * limitLocal" v-model="currentPageLocal" :per-page="9"></b-pagination>
 </template>
 
 <script>
@@ -8,12 +8,14 @@ export default {
   props: {
     currentPage: Number,
     pages: Number,
-    changePage: Function
+    changePage: Function,
+    limit: Number,
   },
   data() {
     return {
       currentPageLocal: this.currentPage,
-      pagesLocal: this.pages
+      pagesLocal: this.pages,
+      limitLocal: this.limit,
     };
   },
   methods: {
@@ -27,6 +29,9 @@ export default {
     },
     pages() {
       this.pagesLocal = this.pages;
+    },
+    limit() {
+      this.limitLocal = this.limit;
     }
   },
   computed: {}

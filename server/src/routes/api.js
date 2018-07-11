@@ -4,28 +4,11 @@ const router = express.Router();
 const DocumentService = require('../services/DocumentService');
 
 const ordersRoutes = require('./ordersRoutes');
-
-const checkAuth = require('../middleware/checkAuth');
+const productsRoutes = require('./productsRoutes');
 
 // main routes
 router.use('/orders', ordersRoutes);
 
-router.get('/products/:page', checkAuth, async (eq, res, next) => {
-  const user_id = eq.userDate ? eq.userDate.id : null;
-  const page = +eq.params.page;
-  const data = await DocumentService.getProducts(user_id, page);
-  res.send(data);
-});
-
-router.post('/products/pages', async (eq, res, next) => {
-  const data = await DocumentService.getPagesCount();
-  res.send(data);
-});
-
-router.get('/products/information/:id', async (eq, res, next) => {
-  const product_id = +eq.params.id;
-  const data = await DocumentService.getInformation(product_id);
-  res.send(data);
-})
+router.use('/products', productsRoutes);
 
 module.exports = router;
