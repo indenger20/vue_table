@@ -4,15 +4,18 @@ export default {
   namespaced: true,
   state: {
     orders: [],
+    staticOrders: [],
   },
   mutations: {
 
     clear(state) {
       state.orders = [];
+      state.staticOrders = [];
     },
 
     deleteRecord(state, order) {
       state.orders = state.orders.filter(o => o.id !== order.id);
+      state.staticOrders = [...state.orders];
     },
 
     editRecord(state, record) {
@@ -21,13 +24,19 @@ export default {
           r.first_name = record.first_name;
           r.last_name = record.last_name;
         }
-      })
+      });
+      state.staticOrders = [...state.orders];
     },
     update(state, orders) {
       state.orders = orders;
+      state.staticOrders = [...state.orders];
     },
     reorder(state, { dropIndex, dragginIndex }) {
       OrdersService.reorder(state.orders, dropIndex, dragginIndex);
+      state.staticOrders = [...state.orders];
+    },
+    filterOrders(state, query) {
+      state.orders = state.staticOrders.filter(o => o.title.toUpperCase().indexOf(query.toUpperCase()) > -1);
     },
   },
   actions: {

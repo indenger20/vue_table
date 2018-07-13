@@ -1,18 +1,9 @@
 @import "@/assets/styles/mixin.scss";
 
-table td {
-    vertical-align: middle;
-}
-
-.main-table {
-    margin-top: 20px;
-    position: relative;
-}
 
 
-.main-table tr {
-    transition: all 1s;
-}
+
+
 .table-row-enter, .table-row-leave-to {
     opacity: 0;
     transform: translateY(30px);
@@ -27,21 +18,26 @@ table td {
 
 .main-table td:nth-child(1),
 .main-table th:nth-child(1) {
-    width: 30%;
+    width: 15%;
 }
 
 .main-table td:nth-child(2),
 .main-table th:nth-child(2) {
-    width: 30%;
+    width: 15%;
 }
 
 .main-table td:nth-child(3),
 .main-table th:nth-child(3) {
-    width: 14%;
+    width: 30%;
 }
 
 .main-table td:nth-child(4),
 .main-table th:nth-child(4) {
+    width: 14%;
+}
+
+.main-table td:nth-child(5),
+.main-table th:nth-child(5) {
     width: 4%;
 }
 
@@ -49,30 +45,46 @@ table td {
     width: 100%;
 }
 
-.main-table .remove {
-    display: block;
-    width: 30px;
-    height: 30px;
+
+.main-table {
+    margin-top: 20px;
     position: relative;
-    margin: 0 auto;
-    cursor: pointer;
-    transition: all .3s;
-    &:hover {
-        opacity: .8;
+    tr {
+        transition: all 1s;
+    }
+    td {
+        vertical-align: middle;
+    }
+    .remove {
+        display: block;
+        width: 30px;
+        height: 30px;
+        position: relative;
+        margin: 0 auto;
+        cursor: pointer;
         transition: all .3s;
+        &:hover {
+            opacity: .8;
+            transition: all .3s;
+        }
+        &:before {
+            @include before-img(1px, 100%);
+            top: 0;
+            left: 15px;
+            background: #f5401d;
+            transform: rotate(45deg);
+        }
+        &:after {
+            @include before-img(1px, 100%);
+            top: 0;
+            left: 15px;
+            background: #f5401d;
+            transform: rotate(-45deg);
+        }
     }
-    &:before {
-        @include before-img(1px, 100%);
-        top: 0;
-        left: 15px;
-        background: #f5401d;
-        transform: rotate(45deg);
-    }
-    &:after {
-        @include before-img(1px, 100%);
-        top: 0;
-        left: 15px;
-        background: #f5401d;
-        transform: rotate(-45deg);
+    img {
+        display: block;
+        max-width: 95px;
+        margin: 0;
     }
 }

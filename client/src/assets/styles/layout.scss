@@ -74,3 +74,16 @@ body {
         padding-left: 30px;
     }
 }
+
+
+.link {
+    font-size: 16px;
+    font-weight: 600;
+    display: table;
+    cursor: pointer;
+    transition: all .3s;
+    &:hover {
+        color: #bba605;
+        transition: all .3s;
+    } 
+}

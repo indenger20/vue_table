@@ -1,7 +1,7 @@
 <template>
   
     <form action="#" class="search-form">
-        <input type="text" class="form-control" v-model="query" placeholder="Search" v-on:input="handleChange">
+        <input type="text" class="form-control" v-model="query" placeholder="Filter by title" v-on:input="handleChange">
     </form>
 
 </template>
@@ -18,7 +18,7 @@ export default {
   },
   methods: {
     handleChange(e) {
-      // this.$store.dispatch("document/searchRecords", this.query);
+      this.$store.commit("orders/filterOrders", this.query);
     }
   }
 };

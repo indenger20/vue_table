@@ -6,10 +6,11 @@ const DocumentService = require('../services/DocumentService');
 const checkAuth = require('../middleware/checkAuth');
 
 
-router.get('/list/:page', async (eq, res, next) => {
+router.get('/list/:page', checkAuth, async (eq, res, next) => {
   const user_id = eq.userDate ? eq.userDate.id : null;
   const page = +eq.params.page;
   const query = eq.query;
+  delete query.redirect;
   const { products, pages } = await DocumentService.getProducts(user_id, page, query);
   const makes = await DocumentService.getMakes();
 

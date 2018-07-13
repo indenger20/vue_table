@@ -25,8 +25,9 @@
             v-on:drag="(e) => handleDrag(e, index)"
           >
             <td>{{order.order_id}}</td>
+            <td><img :src="require(`@/../../images/${order.img}`)"  alt=""></td>
             <td>
-              {{order.title}}
+              <span @click="() => getProductInfo(order.product_id)" class="link">{{order.title}}</span>
             </td>
             <td>
               {{formatPrice(order.price)}}

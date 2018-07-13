@@ -4,22 +4,18 @@ import { formatUSD } from '../../helpers/utils';
 const fields = [
   {
     title: 'Order ID',
-    sort: true,
-    colspan: 2,
+  },
+  {
+    title: 'Image',
   },
   {
     title: 'Title',
-    sort: true,
-    colspan: 0,
   },
   {
     title: 'Price',
-    sort: true,
-    colspan: 0,
   },
   {
     title: 'Actions',
-    colspan: 0,
   }
 ]
 
@@ -54,6 +50,9 @@ export default {
       } else if (this.dragginIndex != dragginIndex) {
         this.dragginIndex = dragginIndex;
       }
+    },
+    getProductInfo(product_id) {
+      this.$store.commit('document/getInformation', product_id)
     }
   },
   computed: {

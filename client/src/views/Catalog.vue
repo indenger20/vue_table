@@ -44,5 +44,8 @@ export default {
       return this.$store.state.document.limit;
     }
   },
+  created() {
+    // this.$store.dispatch("document/getProducts");
+  }
 };
 </script>

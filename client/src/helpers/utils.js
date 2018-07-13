@@ -28,8 +28,6 @@ export const getPaginationFromLocalStorage = () => {
 
 
 export const UpdateQueryString = (key, value, url) => {
-  console.log(key);
-  console.log(value);
   if (!url) url = window.location.href;
   const re = new RegExp("([?&])" + key + "=.*?(&|#|$)(.*)", "gi");
   let hash = null;
@@ -66,27 +64,35 @@ export const UpdateQueryString = (key, value, url) => {
   }
 }
 
+export const isEmpty = (obj) => {
+  for (const prop in obj) {
+    if (obj.hasOwnProperty(prop))
+      return false;
+  }
+  return true;
+};
 
 
 export const createFitlerQuery = ({ makes, selected, price }) => {
   const newVal = selected.map(t => makes.find(m => m.title === t).id);
   const data = {
-    make: newVal.join(','),
-    price: price.join(','),
+    make: newVal ? newVal.join(',') : [],
+    price: price ? price.join(',') : [0, 500000],
   };
   return data;
 }
 
 export const getFilterFromQuery = () => {
   const filterQuery = window.location.search;
-
-  let filterArray = filterQuery.split('?')[1].split('&');
-
   let filter = {};
 
-  for (let i = 0; i < filterArray.length; i += 1) {
-    const propArr = filterArray[i].split('=');
-    filter[propArr[0]] = propArr[1].split(',');
+  if (filterQuery.split('?')[1]) {
+    let filterArray = filterQuery.split('?')[1].split('&');
+    for (let i = 0; i < filterArray.length; i += 1) {
+      const propArr = filterArray[i].split('=');
+      filter[propArr[0]] = propArr[1].split(',');
+    }
   }
+
   return filter;
 }

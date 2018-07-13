@@ -1,5 +1,5 @@
 <template>
-  <b-pagination @change="changeHandle" size="md" :total-rows="pagesLocal * limitLocal" v-model="currentPageLocal" :per-page="9"></b-pagination>
+  <b-pagination @input="changeHandle" size="md" :total-rows="pagesLocal * limitLocal" v-model="currentPageLocal" :per-page="9"></b-pagination>
 </template>
 
 <script>

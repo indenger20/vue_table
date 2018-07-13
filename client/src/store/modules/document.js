@@ -5,6 +5,8 @@ import {
   getPaginationFromLocalStorage,
   UpdateQueryString,
   getFilterFromQuery,
+  isEmpty,
+  sortAlphabetical,
 } from "../../helpers/utils";
 
 
@@ -42,7 +44,7 @@ export default {
       }
     },
     updateMakes(state, makes) {
-      state.makes = makes;
+      state.makes = makes.sort((a, b) => sortAlphabetical(a.title, b.title));
     },
     inCart(state, product_id) {
       const products = state.products.map(p => {
@@ -69,7 +71,8 @@ export default {
       router.push({ path: 'productInfo', query: { product_id } });
     },
     updateFilter(state) {
-      state.filter = getFilterFromQuery();
+      const newFilter = getFilterFromQuery();
+      state.filter = !isEmpty(newFilter) ? newFilter : state.filter;
     },
     resetSlider(state) {
       state.filter = { price: [0, 500000] };
@@ -78,13 +81,14 @@ export default {
   actions: {
     async getProducts({ commit }, pageCount) {
       let pagination = getPaginationFromLocalStorage();
+      const { products } = await DocumentService.getProducts(pageCount || pagination ? pagination.page : 1);
       if (pagination) {
         pagination = {
           ...pagination,
           page: pageCount || pagination.page,
         };
       }
-      const { products } = await DocumentService.getProducts(pageCount || pagination ? pagination.page : 1);
+
       commit('updateProducts', products);
       commit('updatePagination', pagination);
     },
