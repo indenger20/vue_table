@@ -45,4 +45,23 @@ module.exports = {
     }
     return ';';
   },
+
+  mapToCategories(products, makes) {
+    const categories = [];
+    for (let i = 0; i < makes.length; i += 1) {
+      const make = makes[i];
+      categories.push({
+        title: make.title,
+        images: [],
+        id: make.id,
+      });
+      products.forEach((product) => {
+        if (product.make_id === make.id) {
+          categories[i].images.push(product.img);
+        }
+      });
+    }
+    return categories.filter(c => !!c.images.length);
+  }
+
 };

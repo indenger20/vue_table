@@ -88,6 +88,20 @@ module.exports = {
     } catch (err) {
       console.log(err);
     }
+  },
+
+  async getCategories() {
+    try {
+      const products = await client.then(conn => conn.query(`
+        SELECT id, img, make_id 
+        FROM products 
+      `));
+      const makes = await this.getMakes();
+      const categories = utils.mapToCategories(products, makes);
+      return categories;
+    } catch (err) {
+      console.log(err);
+    }
   }
 
 }

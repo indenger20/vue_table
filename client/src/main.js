@@ -3,6 +3,7 @@ import App from './App.vue';
 import router from './router';
 import store from './store/store';
 import BootstrapVue from 'bootstrap-vue';
+import VueCarousel from 'vue-carousel';
 
 import './assets/styles/index.scss';
 
@@ -12,6 +13,7 @@ import Drag_Drop from 'vue-drag-and-drop';
 
 Vue.use(BootstrapVue);
 Vue.use(Drag_Drop);
+Vue.use(VueCarousel);
 
 new Vue({
   router,

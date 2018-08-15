@@ -5,7 +5,7 @@ import Cart from './views/Cart.vue';
 import Catalog from './views/Catalog.vue';
 import Login from './views/Login.vue';
 import ProductInfo from './views/ProductInfo.vue';
-import store from './store/store';
+// import store from './store/store';
 
 Vue.use(Router);
 
@@ -16,7 +16,11 @@ const router = new Router({
   },
   routes: [
     {
-      path: '/',
+      path: '*',
+      redirect: '/home'
+    },
+    {
+      path: '/home',
       name: 'home',
       component: Home,
     },
@@ -44,12 +48,12 @@ const router = new Router({
   ]
 });
 
-router.beforeEach((to, from, next) => {
-  if (to.matched.some(record => record.meta.requiresAuth) && store.state.user.user === null) {
-    next({ path: '/login', query: { redirect: to.fullPath } });
-  } else {
-    next();
-  }
-});
+// router.beforeEach((to, from, next) => {
+//   if (to.matched.some(record => record.meta.requiresAuth) && store.state.user.user === null) {
+//     next({ path: '/login', query: { redirect: to.fullPath } });
+//   } else {
+//     next();
+//   }
+// });
 
 export default router;

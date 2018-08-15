@@ -12,9 +12,10 @@ router.get('/list/:page', checkAuth, async (eq, res, next) => {
   const query = eq.query;
   delete query.redirect;
   const { products, pages } = await DocumentService.getProducts(user_id, page, query);
+  const categories = await DocumentService.getCategories();
   const makes = await DocumentService.getMakes();
 
-  res.send({ products, makes, pages });
+  res.send({ products, makes, pages, categories });
 });
 
 router.get('/:page', checkAuth, async (eq, res, next) => {

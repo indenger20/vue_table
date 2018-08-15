@@ -7007,6 +7007,10 @@ vue-axios@^2.1.1:
   version "2.1.1"
   resolved "https://registry.yarnpkg.com/vue-axios/-/vue-axios-2.1.1.tgz#6167f2db93065d9bcfc90e65d063ccf34f8b1d63"
 
+vue-carousel@^0.10.0:
+  version "0.10.0"
+  resolved "https://registry.yarnpkg.com/vue-carousel/-/vue-carousel-0.10.0.tgz#d87581caab65040b59962cb4833a59ec190265d8"
+
 vue-drag-and-drop@^3.0.0:
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/vue-drag-and-drop/-/vue-drag-and-drop-3.0.0.tgz#ef832d9d0e8ab4f84782df77a0041f1690ea162e"

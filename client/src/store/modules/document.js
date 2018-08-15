@@ -19,6 +19,7 @@ export default {
     pages: null,
     limit: null,
     information: null,
+    categories: [],
     makes: [],
     filter: {
       price: [0, 500000],
@@ -34,6 +35,9 @@ export default {
     },
     updateProducts(state, products) {
       state.products = products;
+    },
+    updateCategories(state, categories) {
+      state.categories = categories;
     },
     updatePagination(state, pagination) {
       setPaginationToLocalStorage(pagination);
@@ -95,7 +99,7 @@ export default {
 
     async getList({ commit }) {
       let pagination = getPaginationFromLocalStorage();
-      const { pages, makes, products } = await DocumentService.getFullList(pagination ? pagination.page : 1);
+      const { pages, makes, products, categories } = await DocumentService.getFullList(pagination ? pagination.page : 1);
 
       if (pagination) {
         pagination = {
@@ -112,6 +116,7 @@ export default {
       }
 
       commit('updateProducts', products);
+      commit('updateCategories', categories);
       commit('updatePagination', pagination);
       commit('updateMakes', makes);
       commit('updateFilter');
